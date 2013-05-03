@@ -1,0 +1,161 @@
+timestamp: 2013-04-22T11:26:26.787276
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2013-04-22T11:26:26.802453
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-04-22T11:26:26.809744
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-04-22T11:26:26.814136
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2013-04-22T11:26:26.817979
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-04-22T11:26:26.822051
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2013-04-22T11:53:44.755903
+CREATE TABLE item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    category CHAR(512),
+    price INTEGER,
+    image CHAR(512),
+    seller INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    description TEXT
+);
+success!
+timestamp: 2013-04-22T14:05:23.702228
+ALTER TABLE item ADD stype CHAR(512);
+timestamp: 2013-04-22T14:05:23.710308
+CREATE TABLE wish(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    category CHAR(512),
+    price INTEGER,
+    image CHAR(512),
+    buyer INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    description TEXT
+);
+success!
+timestamp: 2013-04-22T14:05:23.719535
+CREATE TABLE bid(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id CHAR(512),
+    amount CHAR(512),
+    bidder CHAR(512)
+);
+success!
+timestamp: 2013-04-22T14:05:23.722592
+CREATE TABLE buy(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id CHAR(512),
+    buyer CHAR(512)
+);
+success!
+timestamp: 2013-04-22T14:05:47.400998
+CREATE TABLE fulfil(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id CHAR(512),
+    seller CHAR(512)
+);
+success!
+timestamp: 2013-04-22T14:05:47.425899
+CREATE TABLE rating(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rate CHAR(512),
+    seller INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-04-22T14:05:47.440170
+CREATE TABLE cart(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id CHAR(512),
+    user_id CHAR(512)
+);
+success!
+timestamp: 2013-04-22T14:05:47.443241
+CREATE TABLE reviews(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-04-22T14:10:21.075113
+ALTER TABLE item ADD selling_type CHAR(512);
+timestamp: 2013-04-22T14:15:13.956104
+ALTER TABLE reviews ADD user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE;
+timestamp: 2013-04-22T14:33:40.149330
+CREATE TABLE sold(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER REFERENCES item (id) ON DELETE CASCADE,
+    price INTEGER,
+    buyer INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-04-22T17:26:59.169466
+ALTER TABLE fulfil ADD price INTEGER;
+timestamp: 2013-04-22T18:07:48.379603
+ALTER TABLE reviews ADD review TEXT;
+timestamp: 2013-04-22T21:10:25.372823
+CREATE TABLE bid_time(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_on TIMESTAMP,
+    item_id INTEGER REFERENCES item (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-04-22T21:25:01.176811
+ALTER TABLE item ADD created_on TIMESTAMP;
+timestamp: 2013-04-22T21:25:01.202520
+ALTER TABLE bid ADD created_on TIMESTAMP;
+timestamp: 2013-04-22T21:30:24.311544
+ALTER TABLE fulfil ADD wish_id INTEGER REFERENCES wish (id) ON DELETE CASCADE;
+timestamp: 2013-04-23T00:03:10.202071
+ALTER TABLE reviews ADD name CHAR(512);
+timestamp: 2013-04-23T01:35:45.421979
+CREATE TABLE report(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    you_are_a CHAR(512),
+    Description TEXT
+);
+success!

@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+{{items=items}}
+{{sold=sold}}
+{{id=id}}
+    <table>
+    {{for i in sold:}}
+        {{if id==i.buyer:}}
+        {{for j in items:}}
+        {{if i.item_id==j.id:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=j.image )}}" width=200px height=auto/></td>
+        <td>{{=A(j.name,_href=URL(r=request, f='item_d', args=j.id))}} </td>
+        <td><span>Rs. </span>{{=j.price}}</td>
+        </tr>
+        {{pass}}
+        {{pass}}
+        {{pass}}
+    {{pass}}
+    </table>
+    <br />

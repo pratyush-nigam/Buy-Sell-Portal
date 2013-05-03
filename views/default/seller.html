@@ -1,0 +1,42 @@
+{{extend 'layout.html'}}
+<h3>Seller Information</h3>
+{{seller=seller}}
+{{no_bids=no_bids}}
+{{bid=bids}}
+
+<p>
+<ul>
+    <li><b>Name :</b> {{=seller.first_name}} {{=seller.last_name}}</li>
+    <li><b>Email id : </b> {{=seller.email}}</li>
+    <li><b>Seller Rating:</b> {{=av}}/5.0</li>
+    {{=form}}
+</ul> 
+</p>
+
+<h4>Products being sold by this seller</h4>
+<p>
+<table>
+{{for i in prod:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=i.image )}}" width=200px height=auto/></td>
+        <td>{{=A(i.name,_href=URL(r=request, f='item_d', args=i.id))}} </td>
+        <td>
+        {{if i.selling_type=='Buy':}}
+            {{=DIV('Rs.',i.price)}}
+        {{else:}}
+            {{if no_bids.has_key(i.id):}}
+                {{=DIV('No bid placed, initial price is Rs.',no_bids[i.id])}}
+            {{else:}}
+                {{for j in bid:}}
+                    {{if i.id==j.item_id:}}
+                     {{=DIV('Current Bid : Rs.',j.amount,' , initial price was Rs.',i.price)}}
+                    {{pass}}
+                {{pass}}
+            {{pass}}
+        {{pass}}
+        </td>
+        </tr>
+{{pass}}
+</table>
+</p>
+

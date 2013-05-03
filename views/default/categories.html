@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+{{=form1}}
+
+    <table>
+    
+    {{for i in items:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=i.image )}}" width=200px height=auto/></td>
+        <td>{{=A(i.name,_href=URL(r=request, f='item_d', args=i.id))}} </td>
+        <td><span>Rs. </span>{{=i.price}}</td>
+        </tr>
+    {{pass}}
+    
+    </table>
+        {{pass}}        
+    <br />

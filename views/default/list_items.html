@@ -1,0 +1,44 @@
+{{extend 'layout.html'}}
+{{=form1}}
+{{items=items}}
+{{bid=bids}}
+{{no_bids=no_bids}}
+    <table>
+    
+    {{for i in items:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=i.image )}}" width=200px height=auto/></td>
+        <td>{{=A(i.name,_href=URL(r=request, f='item_d', args=i.id))}} </td>
+        
+        <td>
+        {{if i.selling_type=='Buy':}}
+            {{=DIV('Rs.',i.price)}}
+        {{else:}}
+            {{if no_bids.has_key(i.id):}}
+                {{=DIV('No bid placed, initial price is Rs.',no_bids[i.id])}}
+            {{else:}}
+                {{for j in bid:}}
+                    {{if i.id==j.item_id:}}
+                     {{=DIV('Current Bid : Rs.',j.amount)}}
+                    {{pass}}
+                {{pass}}
+            {{pass}}
+        {{pass}}
+        
+        
+        </td>
+        
+        <td>
+        {{if i.selling_type=='Buy':}}
+            {{=A('Buy this item',_href=URL(r=request, f='buy_item', args=i.id))}}
+        {{else:}}
+            {{=A('Place a Bid',_href=URL(r=request, f='place_bid', args=i.id))}}
+        {{pass}}
+        
+        </td>
+        </tr>
+    {{pass}}
+    
+    </table>
+        {{pass}}        
+    <br />

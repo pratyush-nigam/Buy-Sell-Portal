@@ -1,0 +1,21 @@
+{{extend 'layout.html'}}
+{{item=item}}
+{{seller=seller}}
+
+<h3>{{=item.name}}</h3>
+
+<img src="{{=URL('download',args=item.image )}}" width=200px height=auto/>
+
+<p>
+<ul>
+
+<li><b>Ready to pay:</b> Rs. {{=item.price}}</li>
+<li><b>Category:</b> {{=item.category}}</li>
+<li><b>Description:</b>{{=item.description}}</li>
+<li>
+    <b>Buyer: </b>{{=A(seller.first_name,_href=URL(r=request, f='seller', args=seller.id))}}
+</li>
+<li>{{=A('Fulfil this wish',_href=URL(r=request, f='fulfil', args=item.id))}}</li>
+</ul>
+</p>
+<br />

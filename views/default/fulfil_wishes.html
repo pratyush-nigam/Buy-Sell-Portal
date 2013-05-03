@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+<h3>Fulfil wishes</h3>
+{{=form1}}
+
+    <table>
+    
+    {{for i in items:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=i.image )}}" width=200px height=auto/></td>
+        <td>{{=A(i.name,_href=URL(r=request, f='wish_d', args=i.id))}} </td>
+        <td><span>Rs. </span>{{=i.price}}</td>
+        <td>{{=A('Fulfil this wish',_href=URL(r=request, f='fulfil', args=i.id))}}</td>
+        </tr>
+    {{pass}}
+    
+    </table>
+        {{pass}}        
+    <br />

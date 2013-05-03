@@ -1,0 +1,54 @@
+{{extend 'layout.html'}}
+{{item=item}}
+{{bid=bids}}
+{{no_bids=no_bids}}
+
+<h3>{{=item.name}}</h3>
+
+<img src="{{=URL('download',args=item.image )}}" width=200px height=auto/>
+
+<p>
+<ul>
+
+<li><b>Price:</b> Rs. {{=item.price}}</li>
+<li><b>Category:</b> {{=item.category}}</li>
+<li><b>Description:</b>{{=item.description}}</li>
+
+{{if item.selling_type=='Bid':}}
+<li>
+    {{if no_bids.has_key(item.id):}}
+        {{=DIV('No bid placed')}}
+    {{else:}}
+        {{for j in bid:}}
+            {{if item.id==j.item_id:}}
+                {{=DIV('Current Bid : Rs.',j.amount)}}
+            {{pass}}
+        {{pass}}
+    {{pass}}
+</li>
+{{pass}}
+
+<li>{{if item.selling_type=='Bid':}}
+        {{=A('Place a bid',_href=URL(r=request, f='place_bid', args=item.id))}}
+    {{pass}}
+    {{if item.selling_type=='Buy':}}
+        {{=A('Buy this item',_href=URL(r=request, f='buy_item', args=item.id))}}
+    {{pass}}
+</li>
+<li>
+    <b>Seller Name: </b>{{=A(seller.first_name,_href=URL(r=request, f='seller', args=seller.id))}}
+</li>
+</ul>
+</p>
+<br />
+
+<h5>Reviews for this item:</h5>
+<table>
+{{for i in reviews:}}
+<tr>
+<td><b>{{=i.name}}</b> says:</td>
+<td>{{=i.review}}</td>
+</tr>
+{{pass}}
+<table>
+{{=form}}

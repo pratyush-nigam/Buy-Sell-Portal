@@ -1,0 +1,21 @@
+{{extend 'layout.html'}}
+<h3>Your fulfilled wishes</h3>
+{{items=items}}
+{{sold=sold}}
+{{id=id}}
+    <table>
+    {{for i in items:}}
+        {{if id==i.buyer:}}
+        {{for j in sold:}}
+        {{if j.wish_id==i.id:}}
+        <tr>    
+        <td><img src="{{=URL('download',args=i.image )}}" width=200px height=auto/></td>
+        <td>{{=A(i.name,_href=URL(r=request, f='item_d', args=i.id))}} </td>
+        <td><span>Rs. </span>{{=i.price}}</td>
+        </tr>
+        {{pass}}
+        {{pass}}
+        {{pass}}
+    {{pass}}
+    </table>
+    <br />
